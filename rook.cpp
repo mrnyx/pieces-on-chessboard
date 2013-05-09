@@ -8,6 +8,7 @@ int piecesNum = 1;
 void capture(int x, int y);
 void uncapture(int x, int y);
 void putPiece(int x, int y);
+void displayBoard();
 void init(int x = 0, int y = 0);
 
 
@@ -33,60 +34,65 @@ void init(int x, int y)
 	putPiece(0,0);
 }
 
+void displayBoard()
+{
+    for(int i = 0; i<8; i++)
+    {
+	for(int j = 0; j<8; j++)
+	{
+	    cout << board[i][j] << " ";
+	}
+	cout << endl;
+    }
+    cout << endl;
+}
+
 void capture(int x, int y)
 {
-	for(int i = 0; i < 8; i++)
-	{
-		board[x][i] += 1;
-		board[i][y] += 1;
-	}
-	board[x][y] = 9;
+    for(int i = 0; i < 8; i++)
+    {
+	board[x][i] += 1;
+	board[i][y] += 1;
+    }
+    board[x][y] = 9;
 }
 
 void uncapture(int x, int y)
 {
-	for(int i = 0; i < 8; i++)
-	{
-		board[x][i] -= 1;
-		board[i][y] -= 1;
-	}
-	board[x][y] = 0;
+    for(int i = 0; i < 8; i++)
+    {
+	board[x][i] -= 1;
+	board[i][y] -= 1;
+    }
+    board[x][y] = 0;
 }
 
 void putPiece(int x, int y)
 {
-	if(piecesNum < 8)
-	{
-		for(int i = 0; i<8; i++)
-		{
-			for(int j = 0; j<8; j++)
-			{
-				if(board[i][j] == 0)
-				{
-					// putting a piece on (i,j)
-					piecesNum++;
-					capture(i,j);
-					putPiece(i,j);
-					uncapture(x,y);
+    if(piecesNum < 8)
+    {
+        for(int i = 0; i<8; i++)
+        {
+            for(int j = 0; j<8; j++)
+            {
+                if(board[i][j] == 0)
+                {
+                    // putting a piece on (i,j)
+                    piecesNum++;
+                    capture(i,j);
+                    putPiece(i,j);
+                    uncapture(x,y);
 
-					return;
-				}
-			}
-		}
+                    return;
+                }
+            }
+        }
 
-	}
-	else
-	{
-		for(int i = 0; i<8; i++)
-		{
-			for(int j = 0; j<8; j++)
-			{
-				cout << board[i][j] << " ";
-			}
-			cout << endl;
-		}
-		cout << endl;
+    }
+    else
+    {
+        displayBoard();
 
-		return;
-	}
+        return;
+    }
 }
